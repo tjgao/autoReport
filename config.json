@@ -1,0 +1,37 @@
+{
+    "mailtitle":"Updates from AutoReport",
+    "mailtext":"Dear Madam/Sir,\n\nThe report is attached. \n\nThis is a automatically sent email, please do not reply.",
+    "mailserver":"smtp.gmail.com:587",
+    "mailpass":"12345",
+    "sender": "tiejun.here@gmail.com", 
+    "receiver" : ["terry.tiejun.gao@gmail.com"],
+    "cc" : ["tiejun.here@gmail.com"],
+    "bcc" : ["fanfanli99@gmail.com", "deleteobject@gmail.com"],
+    "dbconn":"Driver={SQL Server Native Client 11.0};Server=(localdb)\\testdb;Database=test;integrated security=true;Trusted_Connection=yes;",
+    "tasks" : [
+        {
+            "enabled":"true",
+            "period" : "daily, 21:46:00",
+            "sheets":[{"name":"Funds","sql" : "test1.sql"},{"name":"Expense","sql":"test2.sql"}],
+            "excel" : "MyTest"
+        },
+        {
+            "enabled":"false",
+            "period" : "weekly, 2, 10:00:00",
+            "sheets":[{"name":"brands","sql" : "brands.sql"},{"name":"brandpromo","sql":"brandpromo.sql"}],
+            "excel" : "BrandSale"
+        },
+        {
+            "enabled":"false",
+            "period" : "monthly, 20, 12:01:00",
+            "sheets":[{"name":"sheet1", "sql":"brandsale2.sql"}],
+            "excel" : "BrandSale2"
+        },
+        {
+            "enabled":"false",
+            "period" : "yearly, 0502, 10:00:00",
+            "sheets":[{"name":"annual", "sql":"annualreport.sql"}],
+            "excel" : "AnnualRpt"
+        }
+    ]
+}

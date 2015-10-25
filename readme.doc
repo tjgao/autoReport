@@ -1,0 +1,30 @@
+The config.json file describes many important settings for this program, such as email, sql server, username, password, etc. 
+
+The "tasks" section includes all actual tasks that need to be executed automatically. The number of tasks is unlimited, and task itself can be customized separately. For a task, it can have following properties(If you choose not to provide these properties, it will try the default properties, which are defined in root level):
+
+[task]
+"sender" - email sender for this task, if not provided, it's value is the same as upper level.
+"mailpass" - email password, if not provided , the same with upper level.
+"cc" - ...
+"bcc" - ...
+"dbconn - database connection string. It can support all kinds of database, be it mysql, oracle or sql server, as long as you provide the correct connection string.
+
+the unique properties of task are:
+"period" - It tells the program when to execute this task. There are different types of "period", such as daily, weekly, monthly, yearly, here are some examples:
+"period":"daily, 19:30:00"
+"period":"weekly, 1, 19:30:00"
+"period":"monthly, 1, 19:30:00"
+"period":"yearly, 0501, 19:30:00"
+The meanings are: "everyday 7:30pm", "every monday 7:30pm", "the first day of every month, 7:30pm", "every year, May 1st, 7:30pm". Note, for weekly, 1 to 6 stands for Monday to Saturday, 7 is Sunday. 
+To make it work, the rule has to be strickly followed.
+
+"enabled" - If you want to temporarily disabled a specific task, assign "false" value to it. By default, if this value is not provided, it will be given a "true"
+
+
+"excel" - The name of the generated excel file. For example, if it is defined as "FundTrans", the final file name would be "FundTrans-daily-19:30:00.xslx", the tail part is added to indicate the time and type of this file. 
+
+"sheets" - you can decide how many sheets in the file can have
+"sheets -> name" - name of the sheet
+"sheets -> sql" - It is the name of the sql file resides in sql directory.
+
+

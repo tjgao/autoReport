@@ -3,10 +3,10 @@
     "mailtext":"Dear Madam/Sir,\n\nThe report is attached. \n\nThis is a automatically sent email, please do not reply.",
     "mailserver":"smtp.gmail.com:587",
     "mailpass":"12345",
-    "sender": "tiejun.here@gmail.com", 
-    "receiver" : ["terry.tiejun.gao@gmail.com"],
-    "cc" : ["tiejun.here@gmail.com"],
-    "bcc" : ["fanfanli99@gmail.com", "deleteobject@gmail.com"],
+    "sender": "tiejun.gao@gmail.com", 
+    "receiver" : ["tiejun.gao@gmail.com"],
+    "cc" : ["tiejun.gao@gmail.com"],
+    "bcc" : ["tiejun.gao@gmail.com", "deleteobject@gmail.com"],
     "dbconn":"Driver={SQL Server Native Client 11.0};Server=(localdb)\\testdb;Database=test;integrated security=true;Trusted_Connection=yes;",
     "tasks" : [
         {

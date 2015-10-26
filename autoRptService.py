@@ -175,7 +175,7 @@ class config:
 
 
 def taskproc(job):
-    t = task(job, logger)
+    t = task.task(job, logger)
     t.work()
 
 class autoRptServ(win32serviceutil.ServiceFramework):
@@ -228,7 +228,7 @@ class autoRptServ(win32serviceutil.ServiceFramework):
                 p = Thread(target = taskproc, args = (i[0],))
                 p.daemon = True
                 p.start()
-            
+            time.sleep(1)
 
 
 if __name__ == '__main__':

@@ -49,7 +49,7 @@ class workTime:
 
     def upcoming(self, cur):
         now, timeMiss, diff = cur, False, None
-        if now.hour*3600 + now.minute*60 + now.second > self.secOfDay: timeMiss = True
+        if now.hour*3600 + now.minute*60 + now.second + now.microsecond/1000000.0 > self.secOfDay: timeMiss = True
         dst = datetime.datetime(now.year,now.month,now.day,self.hours,self.mins,self.seconds)
         if self.worktype == WORKTYPE.DAILY:
             if timeMiss: 

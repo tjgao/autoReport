@@ -1,7 +1,8 @@
 import logging, os
 from logging import handlers
 
-class atLogger:
+
+class atLogger():
     def __init__(self):
         path = os.path.dirname(os.path.realpath(__file__)) + os.sep + 'log' 
         if not os.path.exists(path) :
@@ -45,3 +46,5 @@ class atLogger:
 
     def exception(self, msg):
         self.logger.exception(msg)
+
+g_logger = atLogger()

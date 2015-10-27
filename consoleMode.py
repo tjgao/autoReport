@@ -1,8 +1,8 @@
 from autoRptService import * 
-import win32api, sys
+import win32api, sys, atlogger
 
-logger.addScreenMode()
-logger.setDebug()
+atlogger.g_logger.addScreenMode()
+atlogger.g_logger.setDebug()
 
 
 

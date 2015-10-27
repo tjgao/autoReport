@@ -1,7 +1,8 @@
-import sendmail
+import sendmail, task, atlogger
 import pyodbc
-import os, datetime
+import os, datetime, sys
 from openpyxl import Workbook
+from config import config
 
 class task:
     def __init__(self, t, logger):
@@ -36,7 +37,9 @@ class task:
             cursor = con.cursor()
             wb = Workbook(optimized_write = True)
             for sheet in self.taskinfo.get('sheets'):
-                sqlfile = os.path.join(curdir,'sql') + os.sep + sheet.get('sql')
+                sqlfile = sheet.get('sql') 
+                if os.sep not in sqlfile:
+                    sqlfile = os.path.join(curdir,'sql') + os.sep + sqlfile
                 with open(sqlfile) as fn:
                     sql = fn.read()
                 ws = wb.create_sheet()
@@ -47,7 +50,6 @@ class task:
                 ws.append(columns)
                 for r in cursor:
                     ws.append(list(r))
-
             con.close()
             # Generate excel file
             fname = os.path.join(curdir,'excel') + os.sep + self.taskinfo.get('excel') + '-' + datetime.datetime.now().strftime('%Y%m%d-%H%M%S.xlsx')
@@ -57,6 +59,10 @@ class task:
             self.logger.exception(e)
 
 if __name__ == '__main__':
-    pass
-
-
+    atlogger.g_logger.addScreenMode()
+    atlogger.g_logger.setDebug()
+    c = config()
+    if not c.loadCfg(): sys.exit()
+    for t in c.tasksAll():
+        tsk = task(t, atlogger.g_logger)
+        tsk.work()

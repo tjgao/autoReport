@@ -7,14 +7,19 @@ from email.utils import COMMASPACE, formatdate
 
 def sendmail( login, sendfrom, sendto, cc, bcc, subject, text, files=None, server="smtp.gmail.com:587"):
     assert isinstance(sendto, list)
-    sendto = sendto + cc + bcc
     msg = MIMEMultipart(
             From = sendfrom, 
             To = COMMASPACE.join(sendto),
             Date = formatdate(localtime = True),
             )
     msg['Subject'] = subject
+    msg['From'] = sendfrom
+    msg['To'] = ', '.join(sendto)
+    if cc: 
+        msg.add_header('Cc', ', '.join(cc))
     msg.attach(MIMEText(text))
+
+    sendto = sendto + cc + bcc
 
     for f in files or []:
         with open(f, 'rb') as fil:

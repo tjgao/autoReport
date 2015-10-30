@@ -15,11 +15,14 @@ def sendmail( login, sendfrom, sendto, cc, bcc, subject, text, files=None, serve
     msg['Subject'] = subject
     msg['From'] = sendfrom
     msg['To'] = ', '.join(sendto)
-    if cc: 
+    if cc and len(cc) > 0: 
         msg.add_header('Cc', ', '.join(cc))
     msg.attach(MIMEText(text))
 
-    sendto = sendto + cc + bcc
+    if cc and isinstance(cc, list):  
+        sendto = sendto + cc
+    if bcc and isinstance(bcc, list):
+        sendto = sendto + bcc
 
     for f in files or []:
         with open(f, 'rb') as fil:

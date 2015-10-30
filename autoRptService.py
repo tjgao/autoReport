@@ -12,6 +12,7 @@ from config import config
 
 
 def taskproc(job):
+    logger = atlogger.g_logger
     t = task.task(job, logger)
     t.work()
 

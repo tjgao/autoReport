@@ -28,7 +28,7 @@ class config:
 
     def tasksAll(self):
         for t in self.cfg.get('tasks'):
-            if t.get('enabled','true').lower() != 'true': continue
+            if t.get('enabled','true').lower() != 'test': continue
             w = t.get('period')
             if w is None: continue
             yield t

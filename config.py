@@ -21,6 +21,7 @@ class config:
         self.prepareCfgItem(task,'cc')
         self.prepareCfgItem(task,'bcc')
         self.prepareCfgItem(task,'dbconn')
+        self.prepareCfgItem(task,'templatesheet')
 
     def prepareCfgItem(self, task, item):
         it = task.get(item, self.cfg.get(item))

@@ -3,6 +3,7 @@ import pyodbc
 import os, datetime, sys
 from openpyxl import Workbook
 from config import config
+from openpyxl.worksheet.page import PageMargins
 
 class task:
     def __init__(self, t, logger):
@@ -36,7 +37,11 @@ class task:
             con = pyodbc.connect(con_str) 
             cursor = con.cursor()
             wb = Workbook()
-            for idx, sheet in enumerate(self.taskinfo.get('sheets')):
+            templatesheet = self.taskinfo.get('templatesheet')
+            for idx, sh in enumerate(self.taskinfo.get('sheets')):
+                sheet = {}
+                sheet.update(templatesheet)
+                sheet.update(sh)
                 sqlfile = sheet.get('sql') 
                 if os.sep not in sqlfile:
                     sqlfile = os.path.join(curdir,'sql') + os.sep + sqlfile
@@ -47,9 +52,32 @@ class task:
                     ws = wb.worksheets[0]
                 else: ws = wb.create_sheet()
                 ws.title = sheet.get('name')
+                #margin
+                margins = sheet.get('margin')
+                if margins:
+                    ws.page_margins = PageMargins(margins[0], margins[1], margins[2], margins[3], margins[4], margins[5])
+                #fitpage
                 if sheet.get('fitpage','true').strip() == 'true':
                     ws.page_setup.fitToPage = True
+                    ws.page_setup.fitToHeight = 0
                     ws.page_setup.fitToWidth = 1
+                #orientation
+                ort = sheet.get('orientation','landscape')
+                if ort in ['portrait','landscape']:
+                    ws.page_setup.orientation = ort
+                #gridline
+                if sheet.get('printgrid','true').strip() == 'true':
+                    ws.print_grid = True
+                #rowtitle
+                titlerow = sheet.get('titlerow')
+                if titlerow is not None:
+                    ws.add_print_title( sheet.get('titlerow'), rows_or_cols = 'rows')
+                #paper size:
+                #PAPERSIZE_A3, PAPERSIZE_A4, PAPERSIZE_A4_SMALL, PAPERSIZE_A5, PAPERSIZE_EXECUTIVE
+                #PAPERSIZE_LEDGER, PAPERSIZE_LEGAL, PAPERSIZE_LETTER, PAPERSIZE_LETTER_SMALL, PAPERSIZE_TABLOID
+                psize = getattr(ws, sheet.get('papersize','PAPERSIZE_A4').upper())
+                if psize:
+                    ws.page_setup.paperSize = psize
                 header = sheet.get('header')
                 if header and isinstance(header, list) and len(header)==3:
                     if header[0] and header[0].strip() != '': 
@@ -79,7 +107,7 @@ class task:
                     ws.append(list(r))
                 for row in ws.iter_rows():
                     for i, cell in enumerate(row):
-                        if fmt[i] == 1 : cell.number_format = '"$"#,##0.00_-'
+                        if fmt[i] == 1 : cell.number_format = '$#,##0_-'
                         elif fmt[i] == 2 : cell.number_format =  '0.00%'
                     
             con.close()

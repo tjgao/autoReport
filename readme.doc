@@ -28,3 +28,8 @@ To make it work, the rule has to be strickly followed.
 "sheets -> sql" - It is the name of the sql file resides in sql directory.
 
 
+--------------------------
+
+valid paper size:
+PAPERSIZE_A3, PAPERSIZE_A4, PAPERSIZE_A4_SMALL, PAPERSIZE_A5, PAPERSIZE_EXECUTIVE, PAPERSIZE_LEDGER, PAPERSIZE_LEGAL, PAPERSIZE_LETTER, PAPERSIZE_LETTER_SMALL, PAPERSIZE_TABLOID
+

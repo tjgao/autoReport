@@ -3,6 +3,7 @@ import pyodbc
 import os, datetime, sys
 from openpyxl import Workbook
 from config import config
+from openpyxl.cell import get_column_letter
 from openpyxl.worksheet.page import PageMargins
 
 class task:
@@ -103,12 +104,19 @@ class task:
                     else: fmt.append(0)
                 # Make column header
                 ws.append(columns)
+                # format and column width
+                column_widths = [0]*len(columns)
                 for r in cursor:
                     ws.append(list(r))
                 for row in ws.iter_rows():
                     for i, cell in enumerate(row):
                         if fmt[i] == 1 : cell.number_format = '$#,##0_-'
                         elif fmt[i] == 2 : cell.number_format =  '0.00%'
+                        if column_widths[i] < len(str(cell.value)): column_widths[i] = len(str(cell.value))
+                    
+                for i, c in enumerate(column_widths):
+                    #print(c)
+                    ws.column_dimensions[get_column_letter(i+1)].width = c
                     
             con.close()
             # Generate excel file

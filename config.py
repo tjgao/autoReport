@@ -57,8 +57,7 @@ class config:
             with open(currentdir + '_config.json') as ff:
                 try:
                     di = json.load(ff)
-                    print(di.get('config'))
-                    if di.get('config') is not null:
+                    if di.get('config') is not None:
                         configpath = di.get('config')
                 except Exception as e:
                     pass

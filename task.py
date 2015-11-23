@@ -110,7 +110,8 @@ class task:
                     ws.append(list(r))
                 for row in ws.iter_rows():
                     for i, cell in enumerate(row):
-                        if fmt[i] == 1 : cell.number_format = '$#,##0_-'
+                        # meaning: if currency entry not provided, two decimal places format obtained.
+                        if fmt[i] == 1 : cell.number_format = sheet.get('currency','$#,##0.00_-')
                         elif fmt[i] == 2 : cell.number_format =  '0.00%'
                         if column_widths[i] < len(str(cell.value)): column_widths[i] = len(str(cell.value))
                     

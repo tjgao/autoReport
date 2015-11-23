@@ -49,8 +49,20 @@ class config:
                 jobs.insert(len(jobs), (t, diff.total_seconds()))
         return jobs
 
+
     def loadCfg(self):
-        with open(os.path.dirname(os.path.realpath(__file__)) + os.sep + 'config.json') as f:
+        currentdir = os.path.dirname(os.path.realpath(__file__)) + os.sep
+        configpath = currentdir + 'config.json'
+        if os.path.isfile(currentdir + '_config.json'):
+            with open(currentdir + '_config.json') as ff:
+                try:
+                    di = json.load(ff)
+                    print(di.get('config'))
+                    if di.get('config') is not null:
+                        configpath = di.get('config')
+                except Exception as e:
+                    pass
+        with open(configpath) as f:
             try:
                 self.cfg = json.load(f)
                 for t in self.cfg['tasks']:
@@ -63,5 +75,4 @@ class config:
                 self._logger.exception(e)
                 return False
         return True
-
 

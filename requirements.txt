@@ -2,5 +2,5 @@ wheel
 python-dateutil
 pywin32
 pyodbc
-openpyxl
+openpyxl (2.3.0)
 
